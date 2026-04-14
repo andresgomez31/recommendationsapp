@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Movie &amp; Series Recommendations</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="styles.css" rel="stylesheet">
+</head>
+<body class="bg-light">
+
+<nav class="navbar navbar-expand-lg bg-white border-bottom">
+  <div class="container">
+    <a class="navbar-brand fw-bold" href="#">Recommendation Hub</a>
+
+    <div class="d-flex gap-2">
+      <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addRecommendationModal">
+        Add Recommendation
+      </button>
+      <button class="btn btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#externalSourceModal">
+        Add External Source
+      </button>
+      <button class="btn btn-dark" id="refreshBtn">Refresh</button>
+    </div>
+  </div>
+</nav>
+
+<main class="container py-4">
+  <div class="row" id="cardsContainer"></div>
+</main>
+
+<div class="modal fade" id="addRecommendationModal" tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <form id="recommendationForm">
+        <div class="modal-header">
+          <h5 class="modal-title">Add Recommendation</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body">
+          <input class="form-control mb-3" id="title" placeholder="Title" required>
+
+          <select class="form-select mb-3" id="type" required>
+            <option value="">Select type</option>
+            <option value="movie">Movie</option>
+            <option value="series">Series</option>
+          </select>
+
+          <select class="form-select mb-3" id="genre" required>
+            <option value="">Select genre</option>
+            <option>Action</option>
+            <option>Comedy</option>
+            <option>Drama</option>
+            <option>Horror</option>
+            <option>Romance</option>
+            <option>Sci-Fi</option>
+            <option>Thriller</option>
+            <option>Animation</option>
+          </select>
+
+          <input class="form-control mb-3" id="year" type="number" placeholder="Year">
+
+          <textarea class="form-control mb-3" id="comment" rows="3" placeholder="Comment" required></textarea>
+
+          <select class="form-select mb-3" id="rating" required>
+            <option value="">Select rating</option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+          </select>
+
+          <input class="form-control mb-3" required id="image_url" placeholder="Image URL">
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-primary" type="submit">Save</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="externalSourceModal" tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <form id="externalSourceForm">
+        <div class="modal-header">
+          <h5 class="modal-title">Add External Source</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body">
+          <input class="form-control mb-3" id="externalSourceName" placeholder="External Source Name">
+          <input class="form-control" id="externalSourceUrl" placeholder="External Source URL">
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-danger" type="button" id="clearExternalSourceBtn">Clear External Source</button>
+          <button class="btn btn-secondary" type="button" data-bs-dismiss="modal">Cancel</button>
+          <button class="btn btn-primary" type="submit">Save</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<div class="toast-container position-fixed bottom-0 end-0 p-3">
+  <div id="errorToast" class="toast text-bg-danger border-0" role="alert">
+    <div class="d-flex">
+      <div class="toast-body">
+        External source is not available.
+      </div>
+      <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
