@@ -31,5 +31,5 @@ jobs:
       uses: azure/webapps-deploy@v3
       with:
         app-name: 'rec-app-andresaugom'
-        publish-profile: ${{ secrets.AzureAppService_PublishProfile_64546c76477348dd91e0a88e9e990f27 }}
+        publish-profile: ${{ secrets.AzureAppService }}
         package: .
