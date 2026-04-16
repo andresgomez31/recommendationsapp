@@ -1,3 +1,495 @@
+:root {
+    --bg: #07111f;
+    --bg-soft: #0d1728;
+    --surface: rgba(255, 255, 255, 0.08);
+    --surface-strong: rgba(255, 255, 255, 0.14);
+    --surface-card: rgba(14, 24, 40, 0.78);
+    --surface-card-2: rgba(18, 30, 49, 0.92);
+    --line: rgba(255, 255, 255, 0.08);
+    --line-strong: rgba(255, 255, 255, 0.14);
+
+    --text-main: #f5f7fb;
+    --text-soft: #c6d0e0;
+    --text-muted: #94a3b8;
+
+    --primary: #7c9cff;
+    --primary-2: #66e3ff;
+    --accent: #b084ff;
+    --gold: #ffd66b;
+    --danger: #ff6b81;
+
+    --shadow-sm: 0 10px 30px rgba(0, 0, 0, 0.22);
+    --shadow-md: 0 20px 50px rgba(0, 0, 0, 0.3);
+    --shadow-lg: 0 30px 80px rgba(0, 0, 0, 0.42);
+
+    --blur: blur(18px);
+
+    --radius-sm: 14px;
+    --radius-md: 20px;
+    --radius-lg: 28px;
+
+    --container-width: 1320px;
+}
+
+/* Base */
+html {
+    scroll-behavior: smooth;
+}
+
 body {
-  font-family: Arial, sans-serif;
+    min-height: 100vh;
+    font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
+        "Segoe UI", sans-serif;
+    color: var(--text-main);
+    background:
+        radial-gradient(circle at 10% 10%, rgba(124, 156, 255, 0.22), transparent 24%),
+        radial-gradient(circle at 85% 15%, rgba(102, 227, 255, 0.16), transparent 22%),
+        radial-gradient(circle at 50% 100%, rgba(176, 132, 255, 0.12), transparent 30%),
+        linear-gradient(145deg, #06101c 0%, #0a1220 38%, #0a1424 100%);
+    /* FIX: fixed → scroll — evita glitches visuales en iOS Safari con transforms/overflow */
+    background-attachment: scroll;
+    overflow-x: hidden;
+}
+
+/* Ambient lights */
+body::before,
+body::after {
+    content: "";
+    position: fixed;
+    /* FIX: eliminado inset: auto — era redundante con las propiedades físicas individuales */
+    width: 34rem;
+    height: 34rem;
+    border-radius: 999px;
+    filter: blur(90px);
+    z-index: 0;
+    pointer-events: none;
+    opacity: 0.45;
+}
+
+body::before {
+    top: -8rem;
+    left: -10rem;
+    background: rgba(124, 156, 255, 0.22);
+}
+
+body::after {
+    right: -10rem;
+    bottom: -10rem;
+    background: rgba(102, 227, 255, 0.14);
+}
+
+.navbar,
+main,
+.toast-container {
+    position: relative;
+    z-index: 1;
+}
+
+.container {
+    max-width: var(--container-width);
+}
+
+/* Navbar */
+.navbar {
+    margin: 1rem auto 0;
+    width: min(calc(100% - 2rem), var(--container-width));
+    border: 1px solid var(--line) !important;
+    border-radius: 24px;
+    background: rgba(9, 17, 31, 0.68) !important;
+    backdrop-filter: var(--blur);
+    -webkit-backdrop-filter: var(--blur);
+    box-shadow: var(--shadow-md);
+}
+
+.navbar .container {
+    padding: 0.85rem 1rem;
+}
+
+.navbar-brand {
+    position: relative;
+    font-size: 1.2rem;
+    font-weight: 800 !important;
+    letter-spacing: -0.03em;
+    color: #fff !important;
+    padding-left: 0.9rem;
+}
+
+.navbar-brand::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0.18rem;
+    bottom: 0.18rem;
+    width: 4px;
+    border-radius: 999px;
+    background: linear-gradient(180deg, var(--primary), var(--primary-2));
+    box-shadow: 0 0 20px rgba(102, 227, 255, 0.45);
+}
+
+.navbar .d-flex {
+    gap: 0.7rem !important;
+    flex-wrap: wrap;
+}
+
+/* Buttons */
+.btn {
+    --bs-btn-border-radius: 999px;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    padding: 0.72rem 1.1rem;
+    border-width: 1px;
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease,
+        background-color 0.2s ease,
+        border-color 0.2s ease,
+        color 0.2s ease;
+}
+
+.btn:hover {
+    transform: translateY(-2px);
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, var(--primary), var(--accent));
+    border-color: transparent;
+    box-shadow: 0 10px 24px rgba(124, 156, 255, 0.28);
+}
+
+.btn-primary:hover {
+    background: linear-gradient(135deg, #8aa7ff, #bb96ff);
+    box-shadow: 0 16px 34px rgba(124, 156, 255, 0.34);
+}
+
+.btn-dark {
+    background: rgba(255, 255, 255, 0.08);
+    border-color: var(--line-strong);
+    color: #fff;
+}
+
+.btn-dark:hover {
+    background: rgba(255, 255, 255, 0.14);
+    border-color: rgba(255, 255, 255, 0.2);
+}
+
+.btn-outline-secondary {
+    color: var(--text-main);
+    border-color: var(--line-strong);
+    background: rgba(255, 255, 255, 0.04);
+}
+
+.btn-outline-secondary:hover {
+    color: #fff;
+    background: rgba(255, 255, 255, 0.12);
+    border-color: rgba(255, 255, 255, 0.2);
+}
+
+/* Main */
+main.container {
+    padding-top: 2.3rem !important;
+    padding-bottom: 4rem !important;
+}
+
+#cardsContainer {
+    row-gap: 1.5rem;
+}
+
+/* Card */
+.card {
+    position: relative;
+    border: 1px solid var(--line);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.07), rgba(255, 255, 255, 0.02)),
+        linear-gradient(180deg, var(--surface-card), var(--surface-card-2));
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    box-shadow: var(--shadow-sm);
+    /* FIX: eliminado backdrop-filter de transition — costoso en GPU sin beneficio visual */
+    transition:
+        transform 0.28s ease,
+        box-shadow 0.28s ease,
+        border-color 0.28s ease;
+}
+
+.card::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background:
+        linear-gradient(135deg, rgba(255, 255, 255, 0.08), transparent 28%, transparent 72%, rgba(255, 255, 255, 0.03)),
+        radial-gradient(circle at top right, rgba(102, 227, 255, 0.08), transparent 24%);
+    pointer-events: none;
+    z-index: 0;
+}
+
+.card>* {
+    position: relative;
+    z-index: 1;
+}
+
+.card:hover {
+    transform: translateY(-10px) scale(1.01);
+    border-color: rgba(124, 156, 255, 0.28);
+    box-shadow: var(--shadow-lg);
+}
+
+.card img,
+.card .card-img-top {
+    width: 100%;
+    height: 255px;
+    object-fit: cover;
+    display: block;
+    filter: saturate(1.06) contrast(1.02);
+}
+
+.card img {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+}
+
+/* FIX: eliminado el bloque .card img::after / .card-img-top::after
+   Los elementos <img> son "replaced elements" y no generan pseudo-elementos.
+   El overlay visual ya está cubierto por .card::before. */
+
+.card-body {
+    padding: 1.15rem 1.15rem 1rem;
+    display: flex;
+    flex-direction: column;
+}
+
+.card-title {
+    color: #fff;
+    font-size: 1.08rem;
+    font-weight: 800;
+    line-height: 1.28;
+    letter-spacing: -0.03em;
+    margin-right: 0.5rem;
+    text-wrap: balance;
+    /* FIX: añadido respaldo para navegadores sin soporte de text-wrap: balance */
+    overflow-wrap: break-word;
+}
+
+/* Badges */
+.badge {
+    border-radius: 999px;
+    padding: 0.5rem 0.78rem;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.01em;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+/* FIX: !important reemplazado por especificidad de selector (.badge.text-bg-secondary) */
+.badge.text-bg-secondary {
+    background: rgba(255, 255, 255, 0.1);
+    color: #eef3ff;
+    backdrop-filter: blur(8px);
+}
+
+/* FIX: !important reemplazado por especificidad de selector (.badge.bg-warning) */
+.badge.bg-warning {
+    background: linear-gradient(135deg, #ffd66b, #ffb84d);
+    color: #2d2200;
+    border: 0;
+    box-shadow: 0 8px 18px rgba(255, 190, 80, 0.2);
+}
+
+/* Metadata paragraphs */
+.card-body p {
+    margin-bottom: 0.45rem !important;
+    color: var(--text-soft);
+    font-size: 0.92rem;
+    line-height: 1.45;
+}
+
+.card-body p strong {
+    color: #ffffff;
+    font-weight: 700;
+}
+
+/* Comment */
+.card-text {
+    margin-top: 0.95rem !important;
+    color: #d8e1ef !important;
+    line-height: 1.65 !important;
+    font-size: 0.94rem;
+    position: relative;
+    padding-top: 0.85rem;
+}
+
+.card-text::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 52px;
+    height: 1px;
+    background: linear-gradient(90deg, rgba(102, 227, 255, 0.9), transparent);
+}
+
+/* Action button area */
+.card .btn-danger,
+.card .btn-outline-danger {
+    margin-top: 1rem;
+    align-self: flex-end;
+    border-radius: 999px;
+    padding: 0.58rem 0.95rem;
+    font-weight: 700;
+    box-shadow: none;
+}
+
+.card .btn-danger {
+    background: linear-gradient(135deg, #ff667e, #ff4d6d);
+    border-color: transparent;
+}
+
+.card .btn-danger:hover {
+    box-shadow: 0 14px 28px rgba(255, 77, 109, 0.24);
+}
+
+/* Modal */
+.modal-content {
+    border: 1px solid var(--line);
+    border-radius: 28px;
+    overflow: hidden;
+    background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.03)),
+        rgba(9, 17, 31, 0.94);
+    color: var(--text-main);
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+    box-shadow: var(--shadow-lg);
+}
+
+.modal-header,
+.modal-footer {
+    border-color: rgba(255, 255, 255, 0.08);
+    padding-left: 1.3rem;
+    padding-right: 1.3rem;
+}
+
+.modal-header {
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.04), rgba(255, 255, 255, 0.015));
+}
+
+.modal-title {
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    color: #fff;
+}
+
+.modal-body {
+    padding: 1.3rem;
+}
+
+.btn-close {
+    filter: invert(1) grayscale(1) brightness(1.5);
+}
+
+/* Inputs */
+.form-control,
+.form-select {
+    color: var(--text-main);
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.09);
+    border-radius: 16px;
+    padding: 0.85rem 1rem;
+    box-shadow: none;
+}
+
+.form-control::placeholder {
+    color: #98a6bb;
+}
+
+.form-control:focus,
+.form-select:focus {
+    color: #fff;
+    background: rgba(255, 255, 255, 0.08);
+    border-color: rgba(124, 156, 255, 0.55);
+    box-shadow: 0 0 0 0.28rem rgba(124, 156, 255, 0.14);
+}
+
+.form-select option {
+    color: #111827;
+}
+
+/* Toast */
+.toast {
+    border-radius: 18px !important;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    box-shadow: var(--shadow-md);
+}
+
+/* Empty state */
+.empty-state {
+    border: 1px solid var(--line);
+    border-radius: 32px;
+    background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.02)),
+        rgba(10, 18, 31, 0.72);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    padding: 3.2rem 1.5rem;
+    text-align: center;
+    color: var(--text-soft);
+    box-shadow: var(--shadow-md);
+}
+
+/* Scrollbar */
+* {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(124, 156, 255, 0.45) rgba(255, 255, 255, 0.04);
+}
+
+*::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+}
+
+*::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.04);
+}
+
+*::-webkit-scrollbar-thumb {
+    background: linear-gradient(180deg, rgba(124, 156, 255, 0.8), rgba(176, 132, 255, 0.8));
+    border-radius: 999px;
+}
+
+/* Responsive */
+@media (max-width: 991.98px) {
+    .navbar {
+        width: calc(100% - 1rem);
+        margin-top: 0.5rem;
+        border-radius: 20px;
+    }
+
+    .navbar .container {
+        gap: 0.9rem;
+    }
+
+    .navbar .btn {
+        width: 100%;
+    }
+}
+
+@media (max-width: 767.98px) {
+    main.container {
+        padding-top: 1.4rem !important;
+    }
+
+    .card img,
+    .card .card-img-top {
+        height: 220px;
+    }
+
+    .card {
+        border-radius: 22px;
+    }
+
+    .modal-content {
+        border-radius: 22px;
+    }
 }
